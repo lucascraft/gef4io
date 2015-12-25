@@ -92,6 +92,22 @@ public class GraphMLMarshallerTests {
 		GraphMLMarshaller.marshall(graphML, new File("samples\\gen_attributes.xml"));
 	}
 	
+	@SuppressWarnings("unchecked")
+	@Test
+	public void testLoadAndMarshallSocialNetGraph() {
+		GraphMLParser attributesGraphMLParser = new GraphMLParser(new File("samples\\socialnet.xml"));
+		Graph attributesGraph = attributesGraphMLParser.load();
+		
+		Assert.assertNotNull("Attribute graph loaded from samples/attribute.xml shouldn't have been null", attributesGraph);
+
+		GraphMLAdapter graphMLAdapter = new GraphMLAdapter();
+		GraphML graphML = graphMLAdapter.adaptGraphRoot(attributesGraph);
+		List<Key> keys = attributesGraphMLParser.getKeys();
+		graphML.setKeys(keys);
+
+		GraphMLMarshaller.marshall(graphML, new File("samples\\gen_socialnet.xml"));
+	}
+	
 	
 	
 }
