@@ -13,7 +13,7 @@ public class GraphMLMarshallerTests {
 
 	@SuppressWarnings("unchecked")
 	@Test
-	public void testLoadSimple() {
+	public void testLoadAndMarshallSimple() {
 		GraphMLParser simpleGraphMLParser = new GraphMLParser(new File("samples\\simple.xml"));
 		Graph simpleGraph = simpleGraphMLParser.load();
 		
@@ -39,7 +39,7 @@ public class GraphMLMarshallerTests {
 	
 	@SuppressWarnings("unchecked")
 	@Test
-	public void testLoadHyperGraph() {
+	public void testLoadAndMarshallHyperGraph() {
 		GraphMLParser hyperGraphMLParser = new GraphMLParser(new File("samples\\hyper.xml"));
 		Graph hyperGraph = hyperGraphMLParser.load();
 		
@@ -50,7 +50,7 @@ public class GraphMLMarshallerTests {
 	
 	@SuppressWarnings("unchecked")
 	@Test
-	public void testLoadPortGraph() {
+	public void testLoadAndMarshallPortGraph() {
 		GraphMLParser portGraphMLParser = new GraphMLParser(new File("samples\\port.xml"));
 		Graph portGraph = portGraphMLParser.load();
 
@@ -62,7 +62,7 @@ public class GraphMLMarshallerTests {
 	
 	@SuppressWarnings("unchecked")
 	@Test
-	public void testLoadNestedGraph() {
+	public void testLoadAndMarshallNestedGraph() {
 		GraphMLParser nestedGraphMLParser = new GraphMLParser(new File("samples\\nested.xml"));
 		Graph nestedGraph = nestedGraphMLParser.load();
 
@@ -74,7 +74,7 @@ public class GraphMLMarshallerTests {
 	
 	@SuppressWarnings("unchecked")
 	@Test
-	public void testLoadAttributeGraph() {
+	public void testLoadAndMarshallAttributeGraph() {
 		GraphMLParser attributesGraphMLParser = new GraphMLParser(new File("samples\\attributes.xml"));
 		Graph attributesGraph = attributesGraphMLParser.load();
 		
