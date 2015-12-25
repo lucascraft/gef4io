@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Graph IO
+Bundle-SymbolicName: org.eclipse.gef4.graph.io
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.eclipse.gef4.graph.io.Activator
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.gef4.graph;bundle-version="0.3.0",
+ org.eclipse.gef4.zest.fx;bundle-version="0.3.0",
+ org.eclipse.gef4.layout;bundle-version="0.3.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+Export-Package: org.eclipse.gef4.graph.io
