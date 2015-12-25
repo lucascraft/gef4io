@@ -1,6 +1,8 @@
-package org.eclipse.gef4.graph.io;
+package org.eclipse.gef4.graph.io.tests;
 
 import java.io.File;
+
+import org.eclipse.gef4.graph.io.GraphMLParser;
 
 public class TestLoadGraphML {
 	public static void main(String[] args) {
