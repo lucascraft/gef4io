@@ -1,18 +1,29 @@
 package org.eclipse.gef4.graph.io.graphml.model;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlValue;
+
+
 public class Attribute {
-	private String keyId;
-	private Key keyValue;
-	public String getKeyId() {
-		return keyId;
+	private String id;
+	
+	@XmlValue
+	private String value;
+
+	public Attribute() {
+		value = "";
 	}
-	public Key getKeyValue() {
-		return keyValue;
+	
+	public Attribute(String key, String val) {
+		this.id = key;
+		this.value = val;
+	}
+	
+	@XmlAttribute(name="key")
+	public String getKeyId() {
+		return id;
 	}
 	public void setKeyId(String keyId) {
-		this.keyId = keyId;
-	}
-	public void setKeyValue(Key keyValue) {
-		this.keyValue = keyValue;
+		this.id = keyId;
 	}
 }

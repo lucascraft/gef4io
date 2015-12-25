@@ -1,14 +1,13 @@
 package org.eclipse.gef4.graph.io.graphml;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
 import org.eclipse.gef4.graph.Edge;
 import org.eclipse.gef4.graph.Graph;
-import org.eclipse.gef4.graph.Node;
 import org.eclipse.gef4.graph.Graph.Builder;
+import org.eclipse.gef4.graph.Node;
 import org.eclipse.gef4.graph.io.graphml.model.Attribute;
 import org.eclipse.gef4.graph.io.graphml.model.Key;
 import org.xml.sax.Attributes;
@@ -131,8 +130,8 @@ public class GraphMLDocHandler2  extends DefaultHandler  {
 	    {
 	    	cdata = cdata.trim();
 	    	if (cdata != null && !"".equals(cdata) && cdata != "\\\n"){
-	    		Object defaultValue = computeAttrValue(keyCtx.peek().getType(), cdata);
-	    		keyCtx.peek().setDefaultValue(defaultValue);
+	    		Object defaultValue = computeAttrValue(keyCtx.peek().getAttrType(), cdata);
+	    		keyCtx.peek().setDefault(defaultValue.toString());
 	    	}
 	    }
 	    if (!atttributeCtx.empty())
@@ -140,19 +139,19 @@ public class GraphMLDocHandler2  extends DefaultHandler  {
 	    	cdata = cdata.trim();
 	    	if (cdata != null && !"".equals(cdata) && cdata != "\\\n")
 	    	{
-		    	for (Key kGlobal : globalAttrMap.values())
+		    	for (String key : globalAttrMap.keySet())
 		    	{
-		    		if (kGlobal.getId().equals(atttributeCtx.peek().getKeyId()))
+		    		if (key.equals(atttributeCtx.peek().getKeyId()))
 		    		{
-		    			Key keyData = globalAttrMap.get(kGlobal.getId());
+		    			Key keyData = globalAttrMap.get(key);
 	
 		    			if (!nodeCtx.isEmpty() && keyData.getForType().equals("node"))
 		    			{
-		    				nodeCtx.peek().getAttrs().put(keyData.getId(), cdata);
+		    				nodeCtx.peek().getAttrs().put(key, cdata);
 		    			}
 		    			if (!edgeCtx.isEmpty() && keyData.getForType().equals("edge"))
 		    			{
-		    				edgeCtx.peek().getAttrs().put(keyData.getId(), cdata);
+		    				edgeCtx.peek().getAttrs().put(key, cdata);
 		    			}
 		    		}
 		    	}
@@ -166,7 +165,7 @@ public class GraphMLDocHandler2  extends DefaultHandler  {
 		super.startElement(uri, localName, qName, attributes);
 		switch (qName)
 		{
-			case GraphMLTags.GRAPHML_NODEDATA:
+			case GraphMLTags.GRAPHML_NODE_DATA:
 				String keyDataId = (String) attributes.getValue("key");
 				Attribute attr = new Attribute();
 				attr.setKeyId(keyDataId);
@@ -180,12 +179,8 @@ public class GraphMLDocHandler2  extends DefaultHandler  {
 				
 				if (nameAttr instanceof String && typeAttr instanceof String)
 				{
-					Key key = new Key();
-					key.setDefaultValue(null);
-					key.setForType((String)forAttr);
-					key.setId((String)keyId);
-					key.setType((String)typeAttr);
-					key.setName((String)nameAttr);
+					Key key = new Key((String)keyId, (String)forAttr, (String)nameAttr, (String)typeAttr);
+					key.setDefault(null);
 					globalAttrMap.put((String)keyId, key);
 					keyCtx.push(key);
 				}
@@ -232,9 +227,6 @@ public class GraphMLDocHandler2  extends DefaultHandler  {
 	public void endElement(String uri, String localName, String qName) throws SAXException {
 		switch (qName)
 		{
-			case GraphMLTags.GRAPHML_ATTRIBUTE:
-				atttributeCtx.pop();
-				break;
 			case GraphMLTags.GRAPHML_KEY:
 				keyCtx.pop();
 				break;
@@ -267,88 +259,5 @@ public class GraphMLDocHandler2  extends DefaultHandler  {
 	public Graph getGraph()
 	{
 		return rootGraph;
-	}
-	@Override
-	public void endDocument() throws SAXException {
-		super.endDocument();
-		System.out.println("<graphml>");
-		for (Key k : globalAttrMap.values())
-		{
-			if (k.getDefaultValue() == null)
-			{
-				System.out.println("    <key id='" + k.getId() +"' for='" + k.getForType() +"' attr.name='" + k.getName() +"' attr.type='" + k.getType() + "' />");
-			}
-			else
-			{
-				System.out.println("    <key id='" + k.getId() +"' for='" + k.getForType() +"' attr.name='" + k.getName() +"' attr.type='" + k.getType() + "'>");
-				System.out.println("        <default>" + k.getDefaultValue() + "</default>");
-				System.out.println("    </key>");
-			}
-		}
-		dumpGraphAsGraphMLText(rootGraph, 1);
-		System.out.println("</graphml>");
-	}
-	
-	private void dumpGraphAsGraphMLText(Graph graph, int lvl)
-	{
-		String indent = "";
-		for (int l=0; l<lvl;l++)
-		{
-			indent += "    ";
-		}
-		System.out.println(indent + "<graph id='" + graph.getAttrs().get(ID) + "'>");
-		for (Node node : graph.getNodes())
-		{
-			boolean nested = node.getNestedGraph() != null;
-			String data = "";
-			if (nested)
-			{
-				System.out.println(indent + "    <node id='"+node.getAttrs().get(ID) + "'>");
-				dumpGraphAsGraphMLText(node.getNestedGraph(), lvl+2);
-			}
-			else 
-			{
-				for (String k : node.getAttrs().keySet())
-				{
-					if (!"id".equals(k))
-					{
-						data += indent + "        <data key='" + k + "'>" + node.getAttrs().get(k) + "</data>";
-					}
-				}
-
-				System.out.println(indent + "    <node id='"+node.getAttrs().get(ID) + "'"+ ((nested || !"".equals(data))?"":"/") + ">");
-				
-				if (!"".equals(data))
-				{
-					System.out.println(data);
-				}
-			}
-			if (nested || !"".equals(data))
-			{
-				System.out.println(indent + "    </node>");
-			}
-		}
-		for (Edge edge: graph.getEdges())
-		{
-			String sourceAttr = "source='"+ edge.getSource().getAttrs().get(ID) +"'";
-			String targetAttr = "target='"+ edge.getTarget().getAttrs().get(ID) +"'";
-			String idAttr = "";
-			if (edge.getAttrs().get(ID) != null)
-			{
-				idAttr = "id='"+ edge.getAttrs().get(ID) +"'";
-			}
-			
-			System.out.println(indent + "    <edge " + idAttr+ " " + sourceAttr + " " + targetAttr + ">");
-			for (String k : edge.getAttrs().keySet())
-			{
-				if (!"id".equals(k))
-				{
-					System.out.println(indent + "        <data key='" + k + "'>" + edge.getAttrs().get(k) + "</data>" );
-				}
-			}
-			System.out.println(indent + "    </edge>");
-			
-		}
-		System.out.println(indent + "</graph>");
 	}
 }

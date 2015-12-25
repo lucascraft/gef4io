@@ -1,39 +1,60 @@
 package org.eclipse.gef4.graph.io.graphml.model;
 
+import javax.xml.bind.annotation.XmlAccessOrder;
+import javax.xml.bind.annotation.XmlAccessorOrder;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlType;
+
+@XmlAccessorOrder(XmlAccessOrder.ALPHABETICAL)
+@XmlType(name="key")
 public class Key {
-	private String id;
-	private String forType;
-	private String name;
-	private String type;
-	private Object defaultValue;
-	public String getId() {
-		return id;
+	private String keyId;
+	private String fType;
+	private String aName;
+	private String aType;
+	
+	private String value;
+
+	public String getDefault() {
+		return value;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setDefault(String defaultValue) {
+		this.value = defaultValue;
+	}
+	public Key() {
+	}
+	public Key(String id, String forType, String attrName, String attrType) {
+		this.keyId = id;
+		this.fType = forType;
+		this.aName = attrName;
+		this.aType = attrType;
 	}
 	public String getForType() {
-		return forType;
+		return fType;
 	}
+	@XmlAttribute(name="id")
+	public String getKeyId() {
+		return keyId;
+	}
+	public void setKeyId(String keyId) {
+		this.keyId = keyId;
+	}
+	@XmlAttribute(name="for")
 	public void setForType(String forType) {
-		this.forType = forType;
+		this.fType = forType;
 	}
-	public String getName() {
-		return name;
+	@XmlAttribute(name="attr.name")
+	public String getAttrName() {
+		return aName;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setAttrName(String attrName) {
+		this.aName = attrName;
 	}
-	public String getType() {
-		return type;
+	@XmlAttribute(name="attr.type")
+	public String getAttrType() {
+		return aType;
 	}
-	public void setType(String type) {
-		this.type = type;
-	}
-	public Object getDefaultValue() {
-		return defaultValue;
-	}
-	public void setDefaultValue(Object defaultValue) {
-		this.defaultValue = defaultValue;
+	public void setAttrType(String attrType) {
+		this.aType = attrType;
 	}
 }

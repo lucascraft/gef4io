@@ -116,8 +116,8 @@ public class GraphMLDocHandler  extends DefaultHandler  {
 	    {
 	    	cdata = cdata.trim();
 	    	if (cdata != null && !"".equals(cdata) && cdata != "\\\n"){
-	    		Object defaultValue = computeAttrValue(keyCtx.peek().getType(), cdata);
-	    		keyCtx.peek().setDefaultValue(defaultValue);
+	    		Object defaultValue = computeAttrValue(keyCtx.peek().getAttrType(), cdata);
+	    		keyCtx.peek().setDefault(defaultValue.toString());
 	    	}
 	    }
 	    if (!atttributeCtx.empty())
@@ -125,19 +125,19 @@ public class GraphMLDocHandler  extends DefaultHandler  {
 	    	cdata = cdata.trim();
 	    	if (cdata != null && !"".equals(cdata) && cdata != "\\\n")
 	    	{
-		    	for (Key kGlobal : globalAttrMap.values())
+		    	for (String key : globalAttrMap.keySet())
 		    	{
-		    		if (kGlobal.getId().equals(atttributeCtx.peek().getKeyId()))
+		    		if (key.equals(atttributeCtx.peek().getKeyId()))
 		    		{
-		    			Key keyData = globalAttrMap.get(kGlobal.getId());
+		    			Key keyData = globalAttrMap.get(key);
 	
 		    			if (!nodeCtx.isEmpty() && keyData.getForType().equals("node"))
 		    			{
-		    				nodeCtx.peek().getAttrs().put(keyData.getId(), cdata);
+		    				nodeCtx.peek().getAttrs().put(key, cdata);
 		    			}
 		    			if (!edgeCtx.isEmpty() && keyData.getForType().equals("edge"))
 		    			{
-		    				edgeCtx.peek().getAttrs().put(keyData.getId(), cdata);
+		    				edgeCtx.peek().getAttrs().put(key, cdata);
 		    			}
 		    		}
 		    	}
@@ -150,7 +150,7 @@ public class GraphMLDocHandler  extends DefaultHandler  {
 		super.startElement(uri, localName, qName, attributes);
 		switch (qName)
 		{
-			case GraphMLTags.GRAPHML_NODEDATA:
+			case GraphMLTags.GRAPHML_NODE_DATA:
 				String keyDataId = (String) attributes.getValue("key");
 				Attribute attr = new Attribute();
 				attr.setKeyId(keyDataId);
@@ -164,12 +164,8 @@ public class GraphMLDocHandler  extends DefaultHandler  {
 				
 				if (nameAttr instanceof String && typeAttr instanceof String)
 				{
-					Key key = new Key();
-					key.setDefaultValue(null);
-					key.setForType((String)forAttr);
-					key.setId((String)keyId);
-					key.setType((String)typeAttr);
-					key.setName((String)nameAttr);
+					Key key = new Key((String)keyId, (String)forAttr, (String)nameAttr, (String)typeAttr);
+					key.setDefault(null);
 					globalAttrMap.put((String)keyId, key);
 					keyCtx.push(key);
 				}
@@ -234,9 +230,6 @@ public class GraphMLDocHandler  extends DefaultHandler  {
 	public void endElement(String uri, String localName, String qName) throws SAXException {
 		switch (qName)
 		{
-			case GraphMLTags.GRAPHML_ATTRIBUTE:
-				atttributeCtx.pop();
-				break;
 			case GraphMLTags.GRAPHML_KEY:
 				keyCtx.pop();
 				break;
@@ -263,5 +256,8 @@ public class GraphMLDocHandler  extends DefaultHandler  {
 	public Graph getGraph()
 	{
 		return rootGraph;
+	}
+	public Map<String, Key> getGlobalAttrMap() {
+		return globalAttrMap;
 	}
 }

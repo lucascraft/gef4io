@@ -1,8 +1,11 @@
 package org.eclipse.gef4.graph.io.graphml.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.eclipse.gef4.graph.Edge;
 import org.eclipse.gef4.graph.Graph;
 import org.eclipse.gef4.graph.Node;
 
@@ -38,6 +41,7 @@ public class GraphMLAdapter {
 			{
 				graphmlNode = new org.eclipse.gef4.graph.io.graphml.model.Node(nodeId);
 			}
+			graphmlNode.setData(computeAttributes(gef4Node.getAttrs(), Node.class));
 			nodesMap.put(nodeId, graphmlNode);
 			graph.getNode().add(graphmlNode);
 		}
@@ -48,12 +52,27 @@ public class GraphMLAdapter {
 			String targetId = (String)gef4Edge.getTarget().getAttrs().get("id");
 			String edgeId = (String)gef4Edge.getAttrs().get("id");
 			org.eclipse.gef4.graph.io.graphml.model.Edge graphmlEdge = new org.eclipse.gef4.graph.io.graphml.model.Edge(edgeId, nodesMap.get(sourceId), nodesMap.get(targetId));
+			graphmlEdge.setData(computeAttributes(gef4Edge.getAttrs(), Edge.class));
 			graph.getEdge().add(graphmlEdge);
 		}
 		
 		return graph;
 	}
 	
+	private List<Attribute> computeAttributes(Map<String, Object> attrMap, Class type)
+	{
+		List<Attribute> attributes = new ArrayList<Attribute>();
+		for (String k : attrMap.keySet())
+		{
+			if (!"id".equals(k))
+			{
+				Attribute attr = new Attribute(k, attrMap.get(k).toString());
+				
+				attributes.add(attr);
+			}
+		}
+		return attributes;
+	}
 //	public static org.eclipse.gef4.graph.io.graphml.model.Node adaptNode(Node gef4node)
 //	{
 //		gef4node.ge

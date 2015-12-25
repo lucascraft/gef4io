@@ -1,10 +1,14 @@
 package org.eclipse.gef4.graph.io.tests;
 
 import java.io.File;
+import java.util.List;
 
 import org.eclipse.gef4.graph.Graph;
 import org.eclipse.gef4.graph.io.graphml.GraphMLParser;
+import org.eclipse.gef4.graph.io.graphml.model.GraphML;
+import org.eclipse.gef4.graph.io.graphml.model.GraphMLAdapter;
 import org.eclipse.gef4.graph.io.graphml.model.GraphMLMarshaller;
+import org.eclipse.gef4.graph.io.graphml.model.Key;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -80,7 +84,12 @@ public class GraphMLMarshallerTests {
 		
 		Assert.assertNotNull("Attribute graph loaded from samples/attribute.xml shouldn't have been null", attributesGraph);
 
-		GraphMLMarshaller.marshall(attributesGraph, new File("samples\\gen_attributes.xml"));
+		GraphMLAdapter graphMLAdapter = new GraphMLAdapter();
+		GraphML graphML = graphMLAdapter.adaptGraphRoot(attributesGraph);
+		List<Key> keys = attributesGraphMLParser.getKeys();
+		graphML.setKeys(keys);
+
+		GraphMLMarshaller.marshall(graphML, new File("samples\\gen_attributes.xml"));
 	}
 	
 	
