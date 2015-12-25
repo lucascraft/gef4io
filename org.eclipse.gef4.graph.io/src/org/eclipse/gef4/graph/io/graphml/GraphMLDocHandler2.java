@@ -9,6 +9,8 @@ import org.eclipse.gef4.graph.Edge;
 import org.eclipse.gef4.graph.Graph;
 import org.eclipse.gef4.graph.Node;
 import org.eclipse.gef4.graph.Graph.Builder;
+import org.eclipse.gef4.graph.io.graphml.model.Attribute;
+import org.eclipse.gef4.graph.io.graphml.model.Key;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
