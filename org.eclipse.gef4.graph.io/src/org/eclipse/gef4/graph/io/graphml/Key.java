@@ -1,4 +1,4 @@
-package org.eclipse.gef4.graph.io;
+package org.eclipse.gef4.graph.io.graphml;
 
 public class Key {
 	private String id;

@@ -4,11 +4,12 @@ import java.io.File;
 
 import org.eclipse.gef4.graph.Graph;
 import org.eclipse.gef4.graph.io.graphml.GraphMLParser;
+import org.eclipse.gef4.graph.io.graphml.model.GraphMLMarshaller;
 import org.junit.Assert;
 import org.junit.Test;
 
 
-public class GraphMLTests {
+public class GraphMLMarshallerTests {
 
 	@SuppressWarnings("unchecked")
 	@Test
@@ -30,6 +31,10 @@ public class GraphMLTests {
 		Assert.assertTrue("node 8 id should have been 'n8'", "n8".equals(simpleGraph.getNodes().get(8).getAttrs().get("id")));
 		Assert.assertTrue("node 9 id should have been 'n9'", "n9".equals(simpleGraph.getNodes().get(9).getAttrs().get("id")));
 		Assert.assertTrue("node 10 id should have been 'n10'", "n10".equals(simpleGraph.getNodes().get(10).getAttrs().get("id")));
+
+		
+		GraphMLMarshaller.marshall(simpleGraph, new File("samples\\gen_simple.xml"));
+		
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -39,6 +44,8 @@ public class GraphMLTests {
 		Graph hyperGraph = hyperGraphMLParser.load();
 		
 		Assert.assertNotNull("Hyper graph loaded from samples/hyper.xml shouldn't have been null", hyperGraph);
+
+		GraphMLMarshaller.marshall(hyperGraph, new File("samples\\gen_hyper.xml"));
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -49,6 +56,8 @@ public class GraphMLTests {
 
 		
 		Assert.assertNotNull("Port graph loaded from samples/port.xml shouldn't have been null", portGraph);
+
+		GraphMLMarshaller.marshall(portGraph, new File("samples\\gen_port.xml"));
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -59,6 +68,8 @@ public class GraphMLTests {
 
 		
 		Assert.assertNotNull("Nested graph loaded from samples/port.xml shouldn't have been null", nestedGraph);
+
+		GraphMLMarshaller.marshall(nestedGraph, new File("samples\\gen_nested.xml"));
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -68,5 +79,10 @@ public class GraphMLTests {
 		Graph attributesGraph = attributesGraphMLParser.load();
 		
 		Assert.assertNotNull("Attribute graph loaded from samples/attribute.xml shouldn't have been null", attributesGraph);
+
+		GraphMLMarshaller.marshall(attributesGraph, new File("samples\\gen_attributes.xml"));
 	}
+	
+	
+	
 }

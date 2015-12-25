@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ GraphMLTests.class})
+@SuiteClasses({ GraphMLTests.class, GraphMLMarshallerTests.class})
 public class AllTests {
 
 }

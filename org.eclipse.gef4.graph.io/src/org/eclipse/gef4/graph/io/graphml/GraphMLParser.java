@@ -1,4 +1,4 @@
-package org.eclipse.gef4.graph.io;
+package org.eclipse.gef4.graph.io.graphml;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -11,7 +11,7 @@ import org.eclipse.gef4.graph.Graph;
 import org.xml.sax.SAXException;
 
 public class GraphMLParser {
-	private GraphMLDocHandler2 _optHandler;
+	private GraphMLDocHandler _optHandler;
 	private File _file;
 	
 	public GraphMLParser(File file) {
@@ -22,7 +22,7 @@ public class GraphMLParser {
 	{
 		try
 		{
-			_optHandler = new GraphMLDocHandler2(_file.getCanonicalPath());
+			_optHandler = new GraphMLDocHandler();
 			javax.xml.parsers.SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
 			parser.parse(new FileInputStream(_file), _optHandler);
 			return _optHandler.getGraph();

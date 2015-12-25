@@ -1,4 +1,4 @@
-package org.eclipse.gef4.graph.io;
+package org.eclipse.gef4.graph.io.graphml;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,10 +24,9 @@ public class GraphMLDocHandler  extends DefaultHandler  {
 	private Graph rootGraph;
 	private Map<String, Edge> edgeMap;
 	private Map<String, Node> nodeMap;
-	private String fileLocation = "";
 
 
-	public GraphMLDocHandler(String fileLocation) {
+	public GraphMLDocHandler() {
 		nodeCtx 		= new Stack<Node>();
 		graphCtx 		= new Stack<Graph>();
 		edgeCtx 		= new Stack<Edge>();
@@ -39,7 +38,6 @@ public class GraphMLDocHandler  extends DefaultHandler  {
 		globalAttrMap 	= new HashMap<String, Key>();
 		attrTypesMap 	= new HashMap<String, Class>();
 		
-		this.fileLocation = fileLocation;
 		init();
 	}
 	
@@ -109,17 +107,7 @@ public class GraphMLDocHandler  extends DefaultHandler  {
 	}
 	
 	@Override
-	public void startDocument() throws SAXException {
-		super.startDocument();
-		
-		System.out.println("----------------------------------------------");
-		System.out.println(fileLocation);
-		System.out.println("----------------------------------------------");
-	}
-	
-	@Override
 	public void characters(char[] ch, int start, int length) throws SAXException {
-		// TODO Auto-generated method stub
 		super.characters(ch, start, length);
 	    String cdata = new String(ch, start, length);
 	    if (!keyCtx.empty())
@@ -273,29 +261,6 @@ public class GraphMLDocHandler  extends DefaultHandler  {
 	public Graph getGraph()
 	{
 		return rootGraph;
-	}
-	@Override
-	public void endDocument() throws SAXException {
-		super.endDocument();
-		if (Platform.inDebugMode())
-		{
-			System.out.println("<graphml>");
-			for (Key k : globalAttrMap.values())
-			{
-				if (k.getDefaultValue() == null)
-				{
-					System.out.println("    <key id='" + k.getId() +"' for='" + k.getForType() +"' attr.name='" + k.getName() +"' attr.type='" + k.getType() + "' />");
-				}
-				else
-				{
-					System.out.println("    <key id='" + k.getId() +"' for='" + k.getForType() +"' attr.name='" + k.getName() +"' attr.type='" + k.getType() + "'>");
-					System.out.println("        <default>" + k.getDefaultValue() + "</default>");
-					System.out.println("    </key>");
-				}
-			}
-			dumpGraphAsGraphMLText(rootGraph, 1);
-			System.out.println("</graphml>");
-		}
 	}
 	
 	private void dumpGraphAsGraphMLText(Graph graph, int lvl)
