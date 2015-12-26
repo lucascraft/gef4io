@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.gef4.graph.Edge;
 import org.eclipse.gef4.graph.Graph;
 import org.eclipse.gef4.graph.Node;
@@ -16,13 +18,17 @@ public class GraphMLAdapter {
 	public GraphMLAdapter() {
 		nodesMap = new HashMap<String, org.eclipse.gef4.graph.io.graphml.model.Node>();
 	}
-	
 	public GraphML adaptGraphRoot(Graph gef4Graph)
 	{
-		return new GraphML(adaptGraph(gef4Graph));
+		return adaptGraphRoot(gef4Graph, new NullProgressMonitor());
+	}
+
+	public GraphML adaptGraphRoot(Graph gef4Graph, IProgressMonitor monitor)
+	{
+		return new GraphML(adaptGraph(gef4Graph, monitor));
 	}
 	
-	public org.eclipse.gef4.graph.io.graphml.model.Graph adaptGraph(Graph gef4Graph)
+	public org.eclipse.gef4.graph.io.graphml.model.Graph adaptGraph(Graph gef4Graph, IProgressMonitor monitor)
 	{
 		org.eclipse.gef4.graph.io.graphml.model.Graph graph = new org.eclipse.gef4.graph.io.graphml.model.Graph();
 		graph.setId((String) gef4Graph.getAttrs().get("id"));
@@ -35,7 +41,7 @@ public class GraphMLAdapter {
 			String nodeId = (String)gef4Node.getAttrs().get("id");
 			if (gef4Node.getNestedGraph() != null)
 			{
-				graphmlNode = new org.eclipse.gef4.graph.io.graphml.model.Node(nodeId, adaptGraph(gef4Node.getNestedGraph()));
+				graphmlNode = new org.eclipse.gef4.graph.io.graphml.model.Node(nodeId, adaptGraph(gef4Node.getNestedGraph(), monitor));
 			}
 			else
 			{

@@ -9,6 +9,8 @@ import java.util.List;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.gef4.graph.Graph;
 import org.eclipse.gef4.graph.io.graphml.model.Key;
 import org.xml.sax.SAXException;
@@ -20,8 +22,14 @@ public class GraphMLParser {
 	public GraphMLParser(File file) {
 		_file = file;
 	}
-
+	
 	public Graph load()
+	{
+		return load(new NullProgressMonitor());
+	}
+
+
+	public Graph load(IProgressMonitor monitor)
 	{
 		try
 		{
