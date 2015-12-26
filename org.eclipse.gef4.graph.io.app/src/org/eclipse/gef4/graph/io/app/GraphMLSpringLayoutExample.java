@@ -40,12 +40,11 @@ public class GraphMLSpringLayoutExample extends AbstractZestExample {
 	@Override
 	protected Graph createGraph() {
 
-		GraphMLParser nestedGraphMLParser = new GraphMLParser(
-				new File("samples\\simple.xml"));
+		GraphMLParser nestedGraphMLParser = new GraphMLParser(new File("samples\\nested.xml"));
 		graph = nestedGraphMLParser.load();
 
-		graph.getAttrs().put(ZestProperties.GRAPH_LAYOUT_ALGORITHM,
-				new SpringLayoutAlgorithm());
+		graph.getAttrs().put(ZestProperties.GRAPH_TYPE, ZestProperties.GRAPH_TYPE_DIRECTED);
+		graph.getAttrs().put(ZestProperties.GRAPH_LAYOUT_ALGORITHM, new SpringLayoutAlgorithm());
 
 		return graph;
 
@@ -53,7 +52,7 @@ public class GraphMLSpringLayoutExample extends AbstractZestExample {
 
 	@Override
 	public void stop() throws Exception {
-		GraphMLMarshaller.marshall(graph, new File("samples\\simple.xml"));
+		GraphMLMarshaller.marshall(graph, new File("samples\\nested.xml"));
 		super.stop();
 	}
 }

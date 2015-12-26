@@ -26,17 +26,17 @@ xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdr
           </node>
           <node id="n6::n1"/>
           <node id="n6::n2"/>
-          <edge id="e10" source="n6::n1" target="n6::n0::n0"/>
+          <!-- <edge id="e10" source="n6::n1" target="n6::n0::n0"/> -->
           <edge id="e11" source="n6::n1" target="n6::n2"/>
         </graph>
     </node>
-    <edge id="e2" source="n5::n2" target="n0"/>
+    <!-- <edge id="e2" source="n5::n2" target="n0"/> -->
     <edge id="e3" source="n0" target="n2"/>
     <edge id="e4" source="n0" target="n1"/>
     <edge id="e5" source="n1" target="n3"/>
     <edge id="e6" source="n3" target="n2"/>
     <edge id="e7" source="n2" target="n4"/>
-    <edge id="e8" source="n3" target="n6::n1"/>
-    <edge id="e9" source="n6::n1" target="n4"/>
+    <!-- <edge id="e8" source="n3" target="n6::n1"/> -->
+    <!-- <edge id="e9" source="n6::n1" target="n4"/> -->
   </graph>
 </graphml>

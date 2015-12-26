@@ -4,17 +4,27 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.gef4.graph.Edge;
 import org.eclipse.gef4.graph.Graph;
 import org.eclipse.gef4.graph.Node;
 import org.eclipse.gef4.graph.io.graphml.model.Attribute;
 import org.eclipse.gef4.graph.io.graphml.model.Key;
+import org.eclipse.gef4.layout.algorithms.SpringLayoutAlgorithm;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class GraphMLDocHandler  extends DefaultHandler  {
+	public static final String EDGE_LABEL_CSS_STYLE = "edge-label-css-style";
+	public static final String NODE_LABEL_CSS_STYLE = "node-label-css-style";
+	public static final String ELEMENT_CSS_ID = "css-id";
+	public static final String GRAPH_TYPE = "type";
+	public static final String GRAPH_TYPE_DIRECTED = "directed";
+	public static final String GRAPH_TYPE_UNDIRECTED = "undirected";
+	public static final String GRAPH_LAYOUT_ALGORITHM = "layout";
+	public static final String ELEMENT_LAYOUT_IRRELEVANT = "layoutIrrelevant";
+	public static final Boolean ELEMENT_LAYOUT_IRRELEVANT_DEFAULT = false;
+
 	private Map<String, Key> globalAttrMap;
 	private Map<String, Class> attrTypesMap;
 	private Stack<Node> nodeCtx;
@@ -131,11 +141,11 @@ public class GraphMLDocHandler  extends DefaultHandler  {
 		    		{
 		    			Key keyData = globalAttrMap.get(key);
 	
-		    			if (!nodeCtx.isEmpty() && keyData.getForType().equals("node"))
+		    			if (!nodeCtx.isEmpty() && keyData.getForType().equals(GraphMLTags.GRAPHML_NODE))
 		    			{
 		    				nodeCtx.peek().getAttrs().put(key, cdata);
 		    			}
-		    			if (!edgeCtx.isEmpty() && keyData.getForType().equals("edge"))
+		    			if (!edgeCtx.isEmpty() && keyData.getForType().equals(GraphMLTags.GRAPHML_EDGE))
 		    			{
 		    				edgeCtx.peek().getAttrs().put(key, cdata);
 		    			}
@@ -176,8 +186,12 @@ public class GraphMLDocHandler  extends DefaultHandler  {
 				
 				Node node = new Node();
 				node.getAttrs().put("id", nid);
+				node.getAttrs().put("label", nid);
+				node.getAttrs().put(NODE_LABEL_CSS_STYLE, nid);
+				node.getAttrs().put(ELEMENT_CSS_ID, nid);
 				node.setGraph(graphCtx.peek());
-				
+				node.getAttrs().put(ELEMENT_LAYOUT_IRRELEVANT,  ELEMENT_LAYOUT_IRRELEVANT_DEFAULT);
+
 				nodeMap.put(nid, node);
 				graphCtx.peek().getNodes().add(node);
 				nodeCtx.push(node);
@@ -196,13 +210,17 @@ public class GraphMLDocHandler  extends DefaultHandler  {
 				Edge edge = new Edge(sourceNode, targetNode);
 				graphCtx.peek().getEdges().add(edge);
 				edge.setGraph(graphCtx.peek());
-
+				edge.getAttrs().put("label", sourceId + " - " + targetId);
+				edge.getAttrs().put(EDGE_LABEL_CSS_STYLE, sourceId + " - " + targetId);
+				edge.getAttrs().put(ELEMENT_CSS_ID, sourceId + " - " + targetId);
+				edge.getAttrs().put(ELEMENT_LAYOUT_IRRELEVANT,  ELEMENT_LAYOUT_IRRELEVANT_DEFAULT);
+				
 				if (eid != null)
 				{
 					edgeMap.put(eid, edge);
 					edge.getAttrs().put("id", eid);
 				}
-				
+
 				edgeCtx.push(edge);
 				break;
 			case GraphMLTags.GRAPHML_GRAPH:
@@ -212,10 +230,14 @@ public class GraphMLDocHandler  extends DefaultHandler  {
 				Graph graph = new Graph();
 				graph.getAttrs().put("edgedefault", edgedefault);
 				graph.getAttrs().put("id", gid);
-				
+				graph.getAttrs().put("label", gid);
+				graph.getAttrs().put(GRAPH_TYPE, GRAPH_TYPE_DIRECTED);
+				graph.getAttrs().put(GRAPH_LAYOUT_ALGORITHM, new SpringLayoutAlgorithm());
+
 				if (!nodeCtx.isEmpty())
 				{
 					nodeCtx.peek().setNestedGraph(graph);
+					graph.setNestingNode(nodeCtx.peek());
 				}
 				graphCtx.push(graph);
 				break;

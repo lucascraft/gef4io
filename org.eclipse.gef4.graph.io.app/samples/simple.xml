@@ -1,28 +1,120 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <graphml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
     <graph id="G" edgedefault="undirected">
-        <node id="n0"/>
-        <node id="n1"/>
-        <node id="n2"/>
-        <node id="n3"/>
-        <node id="n4"/>
-        <node id="n5"/>
-        <node id="n6"/>
-        <node id="n7"/>
-        <node id="n8"/>
-        <node id="n9"/>
-        <node id="n10"/>
-        <edge source="n0" target="n2"/>
-        <edge source="n1" target="n2"/>
-        <edge source="n2" target="n3"/>
-        <edge source="n3" target="n5"/>
-        <edge source="n3" target="n4"/>
-        <edge source="n4" target="n6"/>
-        <edge source="n6" target="n5"/>
-        <edge source="n5" target="n7"/>
-        <edge source="n6" target="n8"/>
-        <edge source="n8" target="n7"/>
-        <edge source="n8" target="n9"/>
-        <edge source="n8" target="n10"/>
+        <node id="n0">
+            <data key="label">n0</data>
+            <data key="css-id">n0</data>
+            <data key="node-label-css-style">n0</data>
+        </node>
+        <node id="n1">
+            <data key="label">n1</data>
+            <data key="css-id">n1</data>
+            <data key="node-label-css-style">n1</data>
+        </node>
+        <node id="n2">
+            <data key="label">n2</data>
+            <data key="css-id">n2</data>
+            <data key="node-label-css-style">n2</data>
+        </node>
+        <node id="n3">
+            <data key="label">n3</data>
+            <data key="css-id">n3</data>
+            <data key="node-label-css-style">n3</data>
+        </node>
+        <node id="n4">
+            <data key="label">n4</data>
+            <data key="css-id">n4</data>
+            <data key="node-label-css-style">n4</data>
+        </node>
+        <node id="n5">
+            <data key="label">n5</data>
+            <data key="css-id">n5</data>
+            <data key="node-label-css-style">n5</data>
+        </node>
+        <node id="n6">
+            <data key="label">n6</data>
+            <data key="css-id">n6</data>
+            <data key="node-label-css-style">n6</data>
+        </node>
+        <node id="n7">
+            <data key="label">n7</data>
+            <data key="css-id">n7</data>
+            <data key="node-label-css-style">n7</data>
+        </node>
+        <node id="n8">
+            <data key="label">n8</data>
+            <data key="css-id">n8</data>
+            <data key="node-label-css-style">n8</data>
+        </node>
+        <node id="n9">
+            <data key="label">n9</data>
+            <data key="css-id">n9</data>
+            <data key="node-label-css-style">n9</data>
+        </node>
+        <node id="n10">
+            <data key="label">n10</data>
+            <data key="css-id">n10</data>
+            <data key="node-label-css-style">n10</data>
+        </node>
+        <edge source="n0" target="n2">
+            <data key="edge-label-css-style">n0 - n2</data>
+            <data key="label">n0 - n2</data>
+            <data key="css-id">n0 - n2</data>
+        </edge>
+        <edge source="n1" target="n2">
+            <data key="edge-label-css-style">n1 - n2</data>
+            <data key="label">n1 - n2</data>
+            <data key="css-id">n1 - n2</data>
+        </edge>
+        <edge source="n2" target="n3">
+            <data key="edge-label-css-style">n2 - n3</data>
+            <data key="label">n2 - n3</data>
+            <data key="css-id">n2 - n3</data>
+        </edge>
+        <edge source="n3" target="n5">
+            <data key="edge-label-css-style">n3 - n5</data>
+            <data key="label">n3 - n5</data>
+            <data key="css-id">n3 - n5</data>
+        </edge>
+        <edge source="n3" target="n4">
+            <data key="edge-label-css-style">n3 - n4</data>
+            <data key="label">n3 - n4</data>
+            <data key="css-id">n3 - n4</data>
+        </edge>
+        <edge source="n4" target="n6">
+            <data key="edge-label-css-style">n4 - n6</data>
+            <data key="label">n4 - n6</data>
+            <data key="css-id">n4 - n6</data>
+        </edge>
+        <edge source="n6" target="n5">
+            <data key="edge-label-css-style">n6 - n5</data>
+            <data key="label">n6 - n5</data>
+            <data key="css-id">n6 - n5</data>
+        </edge>
+        <edge source="n5" target="n7">
+            <data key="edge-label-css-style">n5 - n7</data>
+            <data key="label">n5 - n7</data>
+            <data key="css-id">n5 - n7</data>
+        </edge>
+        <edge source="n6" target="n8">
+            <data key="edge-label-css-style">n6 - n8</data>
+            <data key="label">n6 - n8</data>
+            <data key="css-id">n6 - n8</data>
+        </edge>
+        <edge source="n8" target="n7">
+            <data key="edge-label-css-style">n8 - n7</data>
+            <data key="label">n8 - n7</data>
+            <data key="css-id">n8 - n7</data>
+        </edge>
+        <edge source="n8" target="n9">
+            <data key="edge-label-css-style">n8 - n9</data>
+            <data key="label">n8 - n9</data>
+            <data key="css-id">n8 - n9</data>
+        </edge>
+        <edge source="n8" target="n10">
+            <data key="edge-label-css-style">n8 - n10</data>
+            <data key="label">n8 - n10</data>
+            <data key="css-id">n8 - n10</data>
+        </edge>
     </graph>
 </graphml>
