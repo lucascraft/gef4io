@@ -73,8 +73,4 @@ public class GraphMLAdapter {
 		}
 		return attributes;
 	}
-//	public static org.eclipse.gef4.graph.io.graphml.model.Node adaptNode(Node gef4node)
-//	{
-//		gef4node.ge
-//	}
 }
