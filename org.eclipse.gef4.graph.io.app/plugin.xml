@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         id="org.eclipse.gef4.graph.io.app"
+         point="org.eclipse.ui.views">
+      <view
+            class="org.eclipse.gef4.graph.io.app.GraphMLView"
+            id="org.eclipse.gef4.graph.io.app"
+            name="GraphML View"
+            restorable="true">
+      </view>
+   </extension>
+
+</plugin>
