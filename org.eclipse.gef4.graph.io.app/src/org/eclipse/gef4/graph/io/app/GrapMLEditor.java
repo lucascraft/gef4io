@@ -40,10 +40,6 @@ public class GrapMLEditor extends AbstractFXEditor {
 	public void init(IEditorSite site, IEditorInput input) throws PartInitException {
 		// TODO Auto-generated method stub
 		super.init(site, input);
-		String message ="";
-		message += "input : " + input;
-		message += "\n" + input.getClass().getName() + "\n";
-		MessageDialog.open(MessageDialog.INFORMATION, Display.getDefault().getActiveShell(), "info", message, SWT.NONE);
 		if (input instanceof FileEditorInput)
 		{
 			File file = ((FileEditorInput)input).getFile().getRawLocation().toFile();
