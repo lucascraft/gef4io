@@ -1,4 +1,4 @@
-package org.eclipse.gef4.graph.io.app;
+package org.eclipse.gef4.graph.io.tests;
 /*******************************************************************************
  * Copyright (c) 2014, 2015 itemis AG and others.
  *
