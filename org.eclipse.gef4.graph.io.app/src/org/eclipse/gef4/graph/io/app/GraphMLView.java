@@ -16,10 +16,7 @@ import org.eclipse.swt.widgets.FileDialog;
 public class GraphMLView extends ZestFxUiView {
 	public GraphMLView() {
 		
-//		GraphMLParser nestedGraphMLParser = new GraphMLParser(new File("samples\\simple.xml"));
-//		setGraph(nestedGraphMLParser.load());
 		setGraph(ZestGraphExample.createDefaultGraph());
-		
 	}
 	
 	@Override

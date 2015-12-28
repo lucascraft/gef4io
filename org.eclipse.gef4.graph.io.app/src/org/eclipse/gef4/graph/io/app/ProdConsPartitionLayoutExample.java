@@ -173,10 +173,8 @@ public class ProdConsPartitionLayoutExample extends AbstractZestExample {
 
 				for (INodeLayout node : context.getNodes()) {
 					if (node instanceof GraphNodeLayout) {
-						String label = (String) ((GraphNodeLayout) node)
-								.getNode().getAttrs().get("label");
-						String kind = (String) ((GraphNodeLayout) node)
-								.getNode().getAttrs().get("KIND");
+						String label = (String) ((GraphNodeLayout) node).getNode().getAttrs().get("label");
+						String kind = (String) ((GraphNodeLayout) node).getNode().getAttrs().get("KIND");
 						System.out.println(kind + " : " + label);
 
 						int startY = yLocation;

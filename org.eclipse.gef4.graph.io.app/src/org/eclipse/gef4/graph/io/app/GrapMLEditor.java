@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.gef4.common.adapt.AdapterKey;
 import org.eclipse.gef4.graph.Graph;
 import org.eclipse.gef4.graph.io.graphml.GraphMLParser;
 import org.eclipse.gef4.graph.io.graphml.model.GraphML;
@@ -14,26 +15,24 @@ import org.eclipse.gef4.graph.io.graphml.model.Key;
 import org.eclipse.gef4.mvc.fx.ui.parts.AbstractFXEditor;
 import org.eclipse.gef4.mvc.fx.viewer.FXViewer;
 import org.eclipse.gef4.mvc.models.ContentModel;
-import org.eclipse.gef4.zest.fx.ZestFxModule;
-import org.eclipse.gef4.zest.fx.ui.ZestFxUiModule;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
+import org.eclipse.gef4.mvc.policies.DeletionPolicy;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.part.FileEditorInput;
 
+import com.google.common.reflect.TypeToken;
 import com.google.inject.Guice;
 import com.google.inject.util.Modules;
+
+import javafx.scene.Node;
 
 public class GrapMLEditor extends AbstractFXEditor {
 	private Graph graph;
 	private GraphMLParser graphMLParser;
-	
+
 	public GrapMLEditor() {
-		super(Guice.createInjector(Modules.override(new ZestFxModule()).with(new ZestFxUiModule())));
+		super(Guice.createInjector(Modules.override(new GraphMLModule()).with(new GraphMLUiModule())));
 	}
 	
 	@Override
@@ -49,6 +48,10 @@ public class GrapMLEditor extends AbstractFXEditor {
 
 			setGraph(graph);
 		}
+	}
+	@Override
+	public boolean isDirty() {
+		return super.isDirty();
 	}
 	
 	public void dispose() {
@@ -78,6 +81,8 @@ public class GrapMLEditor extends AbstractFXEditor {
 		graphML.setKeys(keys);
 
 		GraphMLMarshaller.marshall(graphML, ((FileEditorInput)getEditorInput()).getFile().getRawLocation().toFile());
+		
+		setDirty(false);
 	}
 	
 	public void setGraph(Graph graph) {
@@ -88,6 +93,7 @@ public class GrapMLEditor extends AbstractFXEditor {
 		}
 		// check we have a content model
 		ContentModel contentModel = getViewer().getAdapter(ContentModel.class);
+		
 		if (contentModel == null) {
 			throw new IllegalStateException("Invalid configuration: Content model could not be retrieved.");
 		}

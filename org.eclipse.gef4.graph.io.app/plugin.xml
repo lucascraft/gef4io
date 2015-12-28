@@ -15,6 +15,7 @@
          point="org.eclipse.ui.editors">
       <editor
             class="org.eclipse.gef4.graph.io.app.GrapMLEditor"
+            contributorClass="org.eclipse.gef4.graph.io.app.GraphMLActionBarContributor"
             extensions="graphml"
             id="org.eclipse.gef4.graph.io.ui.GraphMLEditor"
             name="GraphML XML Editor">

@@ -72,9 +72,7 @@ public class GraphMLAdapter {
 		{
 			if (!"id".equals(k))
 			{
-				Attribute attr = new Attribute(k, attrMap.get(k).toString());
-				
-				attributes.add(attr);
+				attributes.add(new Attribute(k, attrMap.get(k).toString()));
 			}
 		}
 		return attributes;
